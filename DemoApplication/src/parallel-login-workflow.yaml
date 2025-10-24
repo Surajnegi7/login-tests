@@ -1,0 +1,46 @@
+apiVersion: testworkflows.testkube.io/v1
+kind: TestWorkflow
+metadata:
+  name: parallel-login-workflow
+spec:
+  steps:
+    - parallel:
+        - run:
+            name: login-alice
+            image: "kubeshop/testkube-maven-executor:latest"
+            args:
+              - mvn
+              - test
+            env:
+              - name: USERNAME
+                value: "alice"
+              - name: PASSWORD
+                value: "alicepass"
+              - name: BASE_URL
+                value: "http://your-app-service:8080"
+        - run:
+            name: login-bob
+            image: "kubeshop/testkube-maven-executor:latest"
+            args:
+              - mvn
+              - test
+            env:
+              - name: USERNAME
+                value: "bob"
+              - name: PASSWORD
+                value: "bobpass"
+              - name: BASE_URL
+                value: "http://your-app-service:8080"
+        - run:
+            name: login-carol
+            image: "kubeshop/testkube-maven-executor:latest"
+            args:
+              - mvn
+              - test
+            env:
+              - name: USERNAME
+                value: "carol"
+              - name: PASSWORD
+                value: "carolpass"
+              - name: BASE_URL
+                value: "http://your-app-service:8080"
